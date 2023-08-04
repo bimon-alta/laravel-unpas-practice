@@ -79,20 +79,23 @@ Route::get('/categories', function(){
   ]);
 });
 
-Route::get('/categories/{category:slug}', function(Category $category){
-  return view('posts', [
-    'title' => "Post By Category : " . $category->name,
-    'active' => 'categories',
-    'posts' => $category->posts->load('author', 'category'),      // using feature Lazy Eager Loading (Lazy loading on parents, once the parent is gotten, then loads all the rest data )
-  ]);
-});
+// Route::get('/categories/{category:slug}', function(Category $category){
+//   return view('posts', [
+//     'title' => "Post By Category : " . $category->name,
+//     'active' => 'categories',
+//     'posts' => $category->posts->load('author', 'category'),      // using feature Lazy Eager Loading (Lazy loading on parents, once the parent is gotten, then loads all the rest data )
+//   ]);
+// });
 
-// NOT CONTROLLER WAY , routes for Authors (User)
-Route::get('/authors/{author:username}', function(User $author){
-  return view('posts', [
-    'title' => 'Post By Author : ' . $author->name,
-    'active' => 'authors',
-    'posts' => $author->posts->load(['category', 'author']),    // using feature Lazy Eager Loading (Lazy loading on parents, once the parent is gotten, then loads all the rest data )
-  ]);
-});
+// // TRY AND ERROR
+// Route::get('/categories/{category:slug}',  [PostController::class, 'bycategory']);
+
+// // NOT CONTROLLER WAY , routes for Authors (User)
+// Route::get('/authors/{author:username}', function(User $author){
+//   return view('posts', [
+//     'title' => 'Post By Author : ' . $author->name,
+//     'active' => 'posts',
+//     'posts' => $author->posts->load(['category', 'author']),    // using feature Lazy Eager Loading (Lazy loading on parents, once the parent is gotten, then loads all the rest data )
+//   ]);
+// });
 

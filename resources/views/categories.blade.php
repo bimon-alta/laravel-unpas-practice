@@ -9,7 +9,7 @@
 
   <h1 class="mb-5">Post Categories</h1>
 
-  <div class="container">
+  <div class="container vh-100">
     <div class="row">
 
       @foreach ( $categories as $category )

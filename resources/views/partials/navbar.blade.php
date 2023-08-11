@@ -22,6 +22,57 @@
           <a class="nav-link {{ ($active === "categories") ? "active" : "" }}" href="/categories">Categories</a>
         </li>
       </ul>
+
+      <ul class="navbar-nav ms-auto">
+        
+        @auth
+          {{-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Welcome back, {{  auth()->user()->name }}</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">My Dashboard</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Logout</a></li>
+            </ul>
+          </li> --}}
+
+          <!-- Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              Welcome back, {{  auth()->user()->name }}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li>
+                <a class="dropdown-item" href="/dashboard"><i class="fa-solid fa-chalkboard me-2"></i>My Dashboard</a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <form action="/logout" method="post">
+                  @csrf
+                  <button type="submit" class="dropdown-item" href="/logout"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>Logout</button>
+                </form>
+              </li>
+            </ul>
+          </li>
+
+        @else
+
+          <li class="nav-item">
+            <!-- Using Bootstrap Icons -->
+            <!-- <a href="/login" class="nav-link {{ ($active === "login") ? "active" : "" }}" ><i class="bi bi-box-arrow-in-right"></i>Login</a> -->
+            
+            <!-- using Font Awesome Icon -->
+            <a href="/login" class="nav-link {{ ($active === "login") ? "active" : "" }}" ><i class="fa-solid fa-arrow-right-to-bracket"></i>Login</a>
+          </li>
+
+        @endauth
+        
+      </ul>
+
+
+      
+
+
+
     </div>
   </div>
 </nav>

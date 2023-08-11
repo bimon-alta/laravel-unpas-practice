@@ -9,7 +9,7 @@
 @section('container')
 
   <section class="vh-100">
-    <h1>Ini Halaman Home</h1>
+    <h1>Welcome User !!!</h1>
   </section>
 
 @endsection

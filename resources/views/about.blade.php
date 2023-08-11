@@ -5,10 +5,12 @@
 
 {{-- define what you want to display on layout's container section --}}
 @section('container')
-  <h1>Halaman About</h1>
-  <h3>{{ $name  }}</h3>
-  <p>{{ $email  }}</p>
-  <img src="img/{{  $image  }}" alt="{{  $name  }}" width="200" class="img-thumbnail rounded-circle" />
+  <section class="vh-100">
+    <h1>Halaman About</h1>
+    <h3>{{ $name  }}</h3>
+    <p>{{ $email  }}</p>
+    <img src="img/{{  $image  }}" alt="{{  $name  }}" width="200" class="img-thumbnail rounded-circle" />
+  </section>
 @endsection
 
 

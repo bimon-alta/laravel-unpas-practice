@@ -1,12 +1,16 @@
 <?php
 
+// use App\Models\Post;
+// use App\Models\User;
 use App\Models\Post;
+
+
 use App\Models\Category;
-use App\Models\User;
-
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\DashboardController;
 
 
 
@@ -99,3 +103,22 @@ Route::get('/categories', function(){
 //   ]);
 // });
 
+
+// Authentication Routes
+// 1. route diberi nama (spt halnya NAMESPACE), bertujuan agar routing lbh mudah diakses, tidak harus pakai '/'
+// 2. penambahan middleware checking, login page hanya bisa diakses by `guest` (NOT logged in)
+// 3. cth routing yg mengakses 'login' ini ada di middleware Authenticate.php , ketika akses page dgn credentials, tapi credentials tdk ditemukan maka diredirect ke route login
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+
+Route::post('/login', [LoginController::class, 'authenticate']);
+
+Route::post('/logout', [LoginController::class, 'logout']);   // logout route
+
+
+// Registration Routes
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');  // penambahan middleware checking, registration page hanya bisa diakses by `guest` (NOT logged in)
+Route::post('/register', [RegisterController::class, 'store']);
+
+
+// Dashboard Routes
+Route::get('/dashboard', [DashboardController::class, 'index'] )->middleware('auth');  // penambahan middleware checking, dashboard page hanya bisa diakses by `authenticated user` (LOGGED in)

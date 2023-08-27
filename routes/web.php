@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardPostController;
+use App\Http\Controllers\AdminCategoryController;
 
 
 
@@ -120,5 +121,32 @@ Route::get('/register', [RegisterController::class, 'index'])->middleware('guest
 Route::post('/register', [RegisterController::class, 'store']);
 
 
-// Dashboard Routes
-Route::get('/dashboard', [DashboardController::class, 'index'] )->middleware('auth');  // penambahan middleware checking, dashboard page hanya bisa diakses by `authenticated user` (LOGGED in)
+// // Dashboard Routes
+// // Routes lama pake controller -> Dashboar idealnya dibuat route khusus terpisah
+// Route::get('/dashboard', [DashboardController::class, 'index'] )->middleware('auth');  // penambahan middleware checking, dashboard page hanya bisa diakses by `authenticated user` (LOGGED in)
+Route::get('dashboard', function(){
+  return view('dashboard.index');
+})->middleware('auth');
+
+
+// Route utk menangani request pembuatan slug otomatis
+// ini Route terpisah dari entity Dashboard post, walau controller nya menuju ke DashboardPostController (Resource Controller)
+// karena ini route spesifik, maka harus didahulukan ( ROUTE SPESIFIK HARUS DI TARUS DI ATAS ROUTE GENERIK/ENTITY )
+Route::get('/dashboard/posts/createMySlug', [DashboardPostController::class, 'createMySlug'])->middleware('auth');
+
+
+// Route::get('/dashboard/posts/{posts:slug}', [DashboardPostController::class, 'index'])->middleware('auth');
+
+// memanfaatkan RESOURCE CONTROLLER
+Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth');
+
+
+/**
+* 1. Route Admin Category ke Resource Controller
+* 2. Mengecualikan show dari category controller (ga dipakai) -> `except`
+* 3. middleware `isAdmin` adalah middleware custom buatan kita utk otorisasi role user
+*
+*/
+Route::resource('/dashboard/categories', AdminCategoryController::class)
+  ->except('show')
+  ->middleware('isAdmin');

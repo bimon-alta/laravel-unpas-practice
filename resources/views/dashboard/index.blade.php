@@ -1,15 +1,7 @@
+@extends('dashboard.layouts.main')
 
-{{-- page (child) ini menggunakan layout `main` di folder `layouts` --}}
-{{-- JANGAN GUNAKAN SEMICOLON `;` UTK MENUTUP SUATU Directives  --}}
-@extends('layouts.main')
-
-{{-- HIRARKI DALAM -> LUAR --}}
-
-{{-- define what you want to display on layout's container section --}}
 @section('container')
-
-  <section class="vh-100">
-    <h1>Welcome User !!!</h1>
-  </section>
-
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2">Welcome Back, {{  auth()->user()->name }}</h1>
+</div>
 @endsection

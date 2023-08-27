@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+// package utk fitur auto slug thd title post
+use Cviebrock\EloquentSluggable\Sluggable;
+
 class Post extends Model
 {
-  use HasFactory;
+  use HasFactory, Sluggable;
 
   // protected $fillable = [
   //   'title', 'slug', 'excerpt', 'body'
@@ -76,4 +79,27 @@ class Post extends Model
   public function author() {            // using alias author as another obj name of user
     return $this->belongsTo(User::class, 'user_id');    // cara menghubungkannya field 'user_id' dijadikan penghubung ke User
   }
+
+  // mengakomodir route yg spt model binding tp dari resource controller
+  // mengganti pencarian default menjadi field selain ID
+  // contoh: /posts/{post} (id as default) --> /posts/{post:slug} (tanpa getRouteKeyName) --> /posts/postingan-pertama (otomatis pake slug)
+  public function getRouteKeyName(){
+    return 'slug';
+  }
+
+
+  /**
+   * Return the sluggable configuration array for this model.
+   *
+   * @return array
+   */
+  public function sluggable(): array
+  {
+      return [
+          'slug' => [
+              'source' => 'title'
+          ]
+      ];
+  }
+
 }
